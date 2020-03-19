@@ -22,7 +22,7 @@
   $('<div class = display_stage></div>').appendTo('body');
 
   sbjId = "test";
-  task_id = "stpsy2_pref_" + main_seq_id;
+  task_id = "stpsy2_hmsc_" + main_seq_id;
   data_dir = "data01";
 
   var prac_img_src = 'https://raw.githubusercontent.com/kywch/StreetPsych/master/images_prac/';
@@ -30,10 +30,11 @@
   var img_ext = 'jpg';
 
   // instruction should match the task prompt
-  var instr_url = 'https://raw.githubusercontent.com/kywch/StreetPsych/master/instructions/preference/';
+  var instr_url = 'https://raw.githubusercontent.com/kywch/StreetPsych/master/instructions/humanscale/';
 
   // required clicks should be four
-  var task_prompt = 'Select ' + required_clicks.toString() + ' streets that you like.';
+  var task_prompt = 'Select ' + required_clicks.toString() + ' streets with the most human scale ' +
+    '(e.g., small buildings and narrow streets).';
 
   var jspsych_session = [];
 
