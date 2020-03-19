@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://users.rcc.uchicago.edu/~kywch/FIREst_201908_pilot/jsdev/fast_rating.css">
+  </link>
+
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+  <script src="https://users.rcc.uchicago.edu/~kywch/FIREst_201908_pilot/jsdev/jspsych.js"></script>
+  <script src="https://users.rcc.uchicago.edu/~kywch/FIREst_201908_pilot/jsdev/jspsych-fast_rating.js?a=1"></script>
+  <script src="https://users.rcc.uchicago.edu/~kywch/FIREst_201908_pilot/jsdev/jspsych-instructions.js"></script>
+  <script src="https://users.rcc.uchicago.edu/~kywch/FIREst_201908_pilot/jsdev/jspsych-fullscreen.js"></script>
+  <script src="https://users.rcc.uchicago.edu/~kywch/FIREst_201908_pilot/jsdev/practice_seq.js"></script>
+  <script src="https://users.rcc.uchicago.edu/~kywch/FIREst_201908_pilot/dist_seqs.php"></script>
+  <script src="https://users.rcc.uchicago.edu/~kywch/FIREst_201908_pilot/jsdev/fast_rating_street.js?a=3"></script>
+</head>
+
+<body></body>
+<script>
+  // set the display stage
+  $('<div class = display_stage_background></div>').appendTo('body');
+  $('<div class = display_stage></div>').appendTo('body');
+
+  sbjId = "test";
+  task_id = "stpsy_preference_" + main_seq_id;
+  data_dir = "data01";
+
+  var prac_img_src =
+    'https://users.rcc.uchicago.edu/~kywch/FIREst_201908_pilot/images_pracside/';
+  //'https://abzfzjuien.cloudimg.io/height/210/x/https://users.rcc.uchicago.edu/~kywch/FIRE_201901/imgs_prac/';
+  var main_img_src =
+    'https://users.rcc.uchicago.edu/~kywch/FIREst_201908_pilot/images_mainside/p1s';
+  //'https://users.rcc.uchicago.edu/~kywch/FIREst_201908_pilot/images_mainroad/p1r';
+  //'https://abzfzjuien.cloudimg.io/height/210/x/https://users.rcc.uchicago.edu/~kywch/FIRE_201901/imgs_main01/';
+  var img_ext = 'jpg';
+
+  // instruction should match the task prompt
+  var instr_url =
+    'https://users.rcc.uchicago.edu/~kywch/FIREst_201908_pilot/instructions/preference/';
+
+  // required clicks should be four
+  var task_prompt = 'Select ' + required_clicks.toString() + ' street images you like.';
+
+  var jspsych_session = [];
+
+  // use the full screen
+  jspsych_session.push({
+    type: 'fullscreen',
+    fullscreen_mode: true
+  });
+
+  jspsych_session.push(generate_instruction_page(instr_url));
+
+  jspsych_session.push({
+    timeline: generate_practice_block(prac_img_src, prac_seq, img_ext, task_prompt)
+  });
+
+  jspsych_session.push({
+    timeline: generate_main_block(main_img_src, main_seq, img_ext, task_prompt)
+  });
+
+  // exit the full screen
+  jspsych_session.push({
+    type: 'fullscreen',
+    fullscreen_mode: false
+  });
+
+  jsPsych.init({
+    timeline: jspsych_session,
+    display_element: document.querySelector('.display_stage'),
+    on_finish: function () {
+      if (flag_debug) {
+        jsPsych.data.displayData();
+      }
+    }
+  });
+</script>
+
+</html>
+
+
+</script>
+
+</html>
