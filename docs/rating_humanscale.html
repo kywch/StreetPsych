@@ -31,6 +31,7 @@
 
   // instruction should match the task prompt
   var instr_url = 'https://raw.githubusercontent.com/kywch/StreetPsych/master/instructions/humanscale/';
+  var instr_imglist = get_instruction_imglist(instr_url);
 
   // required clicks should be four
   var task_prompt = 'Select ' + required_clicks.toString() + ' streets with the most human scale ' +
@@ -44,7 +45,7 @@
     fullscreen_mode: true
   });
 
-  jspsych_session.push(generate_instruction_page(instr_url));
+  jspsych_session.push(generate_instruction_page(instr_imglist));
 
   jspsych_session.push({
     timeline: generate_practice_block(prac_img_src, prac_seq, img_ext, task_prompt)
@@ -62,6 +63,7 @@
 
   jsPsych.init({
     timeline: jspsych_session,
+    preload_images: instr_imglist,
     display_element: document.querySelector('.display_stage'),
     on_finish: function () {
       if (flag_debug) {

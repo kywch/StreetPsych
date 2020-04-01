@@ -10,9 +10,7 @@
   <script src="https://cdn.jsdelivr.net/gh/kywch/StreetPsych@master/lib/jspsych-fullscreen.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/kywch/StreetPsych@master/lib/jspsych-instructions.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/kywch/StreetPsych@master/lib/jspsych-multi-rating.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/kywch/StreetPsych@master/lib/practice_seq.js"></script>
-  <script src="https://users.rcc.uchicago.edu/~kywch/StreetPsych/dist_seqs.php"></script>
-  <script src="https://users.rcc.uchicago.edu/~kywch/StreetPsych/lib/multi-rating_main.js"></script>
+  <script src="https://users.rcc.uchicago.edu/~kywch/StreetPsych/lib/multi-rating_expert.js"></script>
 </head>
 
 <body></body>
@@ -22,20 +20,19 @@
   $('<div class = display_stage></div>').appendTo('body');
 
   sbjId = "test";
-  task_id = "stpsy2_imgb_" + main_seq_id;
-  data_dir = "data01";
+  task_id = "stpsyXP_walk";
+  data_dir = "data02";
 
   var prac_img_src = 'https://raw.githubusercontent.com/kywch/StreetPsych/master/images_prac/';
   var main_img_src = 'https://raw.githubusercontent.com/kywch/StreetPsych/master/images_main/stp';
   var img_ext = 'jpg';
 
   // instruction should match the task prompt
-  var instr_url = 'https://raw.githubusercontent.com/kywch/StreetPsych/master/instructions/imageability/';
+  var instr_url = 'https://raw.githubusercontent.com/kywch/StreetPsych/master/instructions/walkability/';
   var instr_imglist = get_instruction_imglist(instr_url);
 
   // required clicks should be four
-  var task_prompt = 'Select the ' + required_clicks.toString() + ' streets that have the most character<br>' +
-    '(i.e., that capture your attention).';
+  var task_prompt = 'Select ' + required_clicks.toString() + ' streets you would most want to walk down.';
 
   var jspsych_session = [];
 
@@ -47,10 +44,7 @@
 
   jspsych_session.push(generate_instruction_page(instr_imglist));
 
-  jspsych_session.push({
-    timeline: generate_practice_block(prac_img_src, prac_seq, img_ext, task_prompt)
-  });
-
+  var main_seq = generate_multi_seq();
   jspsych_session.push({
     timeline: generate_main_block(main_img_src, main_seq, img_ext, task_prompt)
   });
@@ -64,7 +58,33 @@
   jsPsych.init({
     timeline: jspsych_session,
     preload_images: instr_imglist,
+
     display_element: document.querySelector('.display_stage'),
+
+    on_data_update: function (data) { // each time the data is updated:
+      // write the current window resolution to the data
+      data.win_res = window.innerWidth + 'x' + window.innerHeight;
+      data.fullscr = fullscr_ON;
+    },
+
+    on_interaction_data_update: function (data) {
+      //interaction data logs if participants leaves the browser window or exits full screen mode
+      interaction = data.event;
+      if (interaction.includes("fullscreen")) {
+        // some unhandy coding to circumvent a bug in jspsych that logs fullscreenexit when actually entering
+        if (fullscr_ON == 'no') {
+          fullscr_ON = 'yes';
+          return fullscr_ON;
+        } else if (fullscr_ON == 'yes') {
+          fullscr_ON = 'no';
+          return fullscr_ON;
+        }
+      } else if (interaction == 'blur' || interaction == 'focus') {
+        focus = interaction;
+        return focus;
+      }
+    },
+
     on_finish: function () {
       if (flag_debug) {
         jsPsych.data.displayData();
