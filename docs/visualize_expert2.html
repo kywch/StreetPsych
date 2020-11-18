@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Street Psychology Visualization</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kywch/StreetPsych/visualize/css/normalize.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kywch/StreetPsych/visualize/css/style.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kywch/StreetPsych/visualize/css/shuffle-styles.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700">
+
+    <script crossorigin="anonymous" src="https://polyfill.io/v3/polyfill.min.js?features=default%2Ces5%2Ces6%2Ces7"></script>
+    <script src="https://cdn.jsdelivr.net/gh/kywch/StreetPsych/visualize/Shuffle.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/kywch/StreetPsych/visualize/expert2_rating_data.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/kywch/StreetPsych/visualize/sorting_expert.js"></script>
+    <script>
+        var image_source = 'https://raw.githubusercontent.com/kywch/StreetPsych/master/images_main/';
+        document.addEventListener('DOMContentLoaded', function () {
+            window.demo = new Demo(document.getElementById('grid'), rating_data, image_source, 'walkability');
+        });
+    </script>
+
+</head>
+
+<body>
+
+    <style>
+        .picture-item {
+            height: 150px;
+            margin-top: 10px;
+        }
+    </style>
+
+    <main role="main" id="main">
+
+        <div class="container">
+            <div class="row">
+                <h2>Street Psychology Visualization (Expert 2)</h2>
+            </div>
+        </div>
+
+        <section class="container">
+            <div class="row">
+                <div class="col-12@sm">
+                    <!-- https://vestride.github.io/Shuffle/#sorting -->
+                    Sort by:
+                    <select class="sort-options">
+                        <option value="walk_dsc">Walkability ▼</option>
+                        <option value="walk_asc">Walkability ▲</option>
+                        <option value="imag_dsc">Imageability ▼</option>
+                        <option value="imag_asc">Imageability ▲</option>
+                        <option value="comp_dsc">Complexity ▼</option>
+                        <option value="comp_asc">Complexity ▲</option>
+                        <option value="encl_dsc">Enclosure ▼</option>
+                        <option value="encl_asc">Enclosure ▲</option>
+                        <option value="hmsc_dsc">Human scale ▼</option>
+                        <option value="hmsc_asc">Human scale ▲</option>
+                        <option value="trsp_dsc">Transparency ▼</option>
+                        <option value="trsp_asc">Transparency ▲</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <br>
+                <h4>Rating instruction: <span id="one-line-question"></span></h2><br>
+            </div>
+        </section>
+
+        <section class="container">
+            <div id="grid" class="row my-shuffle-container"></div>
+        </section>
+
+    </main>
+
+    <hr>
+    <p>This page is maintained by <a href="https://kywch.github.io">Kyoung Whan Choe</a>.</p>
+    
+</body>
+
+</html>
