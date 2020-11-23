@@ -1,4 +1,5 @@
 # StreetPsych
+* **Measuring the visual pedestrial qualities of urban streets through crowdsourcing** [VSS 2020 poster](https://kywch.github.io/pdf/ChoeEtal_VSS2020_street_psychology.pdf)
 * Sort the images by the ratings from
   * Mturk: https://kywch.github.io/StreetPsych/visualize.html
   * Expert 1: https://kywch.github.io/StreetPsych/visualize_expert1.html
